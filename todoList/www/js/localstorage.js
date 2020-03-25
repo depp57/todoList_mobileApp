@@ -1,11 +1,11 @@
 let storage = window.localStorage;
 
-function add(task) {
-    storage.setItem(task.title, JSON.stringify(task));
+function addInStorage(object) {
+    storage.setItem(object.title, JSON.stringify(object));
 }
 
-function remove(task) {
-    let title = task.innerText;
+function removeInStorage(object) {
+    let title = object.innerText;
     storage.removeItem(title);
 }
 

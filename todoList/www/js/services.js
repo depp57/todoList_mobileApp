@@ -28,7 +28,8 @@ myApp.services = {
         '</ons-list-item>'
       );
 
-      add(data);
+      // AJOUT DANS LE LOCAL STORAGE
+      addInStorage(data);
 
       // Store data within the element.
       taskItem.data = data;
@@ -122,7 +123,7 @@ myApp.services = {
       // Store the new data within the element.
       taskItem.data = data;
 
-      add(data);
+      addInStorage(data);
     },
 
     // Deletes a task item and its listeners.
@@ -137,7 +138,7 @@ myApp.services = {
         myApp.services.categories.updateRemove(taskItem.data.category);
       });
 
-      remove(taskItem);
+      removeInStorage(taskItem);
     },
 
     removeAll: function(){

@@ -85,7 +85,7 @@ myApp.controllers = {
           ons.notification.alert('Le titre ne peut pas être vide.');
         }
 
-        add(newTask);
+        addInStorage(newTask);
       };
     });
   },
