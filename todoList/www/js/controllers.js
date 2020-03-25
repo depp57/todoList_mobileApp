@@ -69,7 +69,8 @@ myApp.controllers = {
             category: page.querySelector('#category-input').value,
             description: page.querySelector('#description-input').value,
             highlight: page.querySelector('#highlight-input').checked,
-            urgent: page.querySelector('#urgent-input').checked
+            urgent: page.querySelector('#urgent-input').checked,
+            status: 'pending'
           };
           // If input title is not empty, create a new task.
           myApp.services.tasks.create(newTask);
@@ -81,7 +82,7 @@ myApp.controllers = {
 
         } else {
           // Show alert if the input title is empty.
-          ons.notification.alert('You must provide a task title.');
+          ons.notification.alert('Le titre ne peut pas être vide.');
         }
 
         add(newTask);
@@ -123,8 +124,9 @@ myApp.controllers = {
                 title: newTitle,
                 category: page.querySelector('#category-input').value,
                 description: page.querySelector('#description-input').value,
-                ugent: element.data.urgent,
-                highlight: page.querySelector('#highlight-input').checked
+                urgent: element.data.urgent,
+                highlight: page.querySelector('#highlight-input').checked,
+                status: page.data.element.data.status
               }
             );
 
@@ -137,7 +139,7 @@ myApp.controllers = {
 
       } else {
         // Show alert if the input title is empty.
-        ons.notification.alert('You must provide a task title.');
+        ons.notification.alert('Le titre ne peut pas être vide.');
       }
     };
   }

@@ -9,8 +9,13 @@ function remove(task) {
     storage.removeItem(title);
 }
 
+function update(task) {
+    storage.setItem(task.title, JSON.stringify(task));
+}
+
 function getAllTasks() {
     let tasks = [];
+    console.log(storage)
     forEachKey(task => tasks.push(JSON.parse(task)));
     return tasks;
 }

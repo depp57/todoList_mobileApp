@@ -15,7 +15,7 @@ myApp.services = {
     create: function(data) {
       // Task item template.
       var taskItem = ons.createElement(
-        '<ons-list-item tappable component="task"' + myApp.services.categories.parseId(data.category)+ '">' +
+        '<ons-list-item tappable status="" component="task" category="' + myApp.services.categories.parseId(data.category)+ '">' +
           '<label class="left">' +
            '<ons-checkbox></ons-checkbox>' +
           '</label>' +
@@ -36,16 +36,33 @@ myApp.services = {
       // Add 'completion' functionality when the checkbox changes.
       taskItem.data.onCheckboxChange = function(event) {
         myApp.services.animators.swipe(taskItem, function() {
-          var listId = '#pending-list';
+          let listId = '#pending-list';
+          let newStatus = 'pending';
           if (taskItem.parentElement.id === 'pending-list' && event.target.checked) {
             listId = '#progress-list';
+            newStatus = 'progress';
+            event.target.checked = false;
           }
-          else if (taskItem.parentElement.id === 'progress-list' && event.target.checked){
+          if (taskItem.parentElement.id === 'progress-list' && event.target.checked){
             listId = "#completed-list";
+            newStatus = 'completed';
           }
 
           //var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#completed-list' : '#pending-list';
           document.querySelector(listId).appendChild(taskItem);
+
+          //update local storage
+          let newData = {
+            title: data.title,
+            category: data.category,
+            description: data.description,
+            urgent: data.urgent,
+            highlight: data.highlight,
+            status: newStatus
+          }
+          update(newData);
+
+
         });
       };
 
@@ -77,8 +94,8 @@ myApp.services = {
         taskItem.classList.add('highlight');
       }
 
-      // Insert urgent tasks at the top and non urgent tasks at the bottom.
-      var pendingList = document.querySelector('#pending-list');
+      // Insert urgent tasks at the top and non urgent tasks at the bottom
+      var pendingList = document.querySelector('#'+ data.status +'-list');
       pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
     },
 
@@ -222,7 +239,13 @@ myApp.services = {
 
     // Swipe animation for task completion.
     swipe: function(listItem, callback) {
-      var animation = (listItem.parentElement.id === 'pending-list') ? 'animation-swipe-right' : 'animation-swipe-left';
+
+      var animation = 'animation-swipe-right';
+      if (listItem.parentElement.id === 'completed-list') {
+        animation = 'animation-swipe-left';
+      }
+
+      //var animation = (listItem.parentElement.id === 'pending-list') ? 'animation-swipe-right' : 'animation-swipe-left';
       listItem.classList.add('hide-children');
       listItem.classList.add(animation);
 
