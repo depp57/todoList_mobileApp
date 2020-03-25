@@ -114,6 +114,8 @@ myApp.services = {
 
       remove(taskItem);
     }
+
+
   },
 
   /////////////////////

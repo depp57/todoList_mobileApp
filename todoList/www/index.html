@@ -48,9 +48,11 @@
         </div>
         <div class="center">TodoList</div>
         <div class="right">
-          <!-- Toolbar-button  only visible for iOS/other. -->
-          <ons-if platform="ios other">
-            <ons-toolbar-button component="button/new-task">New</ons-toolbar-button>
+
+          <ons-if platform="android other">
+            <ons-toolbar-button component="button/remove-all-tasks">
+              <ons-icon icon="fa-bomb" style="color: red;"></ons-icon>
+            </ons-toolbar-button>
           </ons-if>
         </div>
       </ons-toolbar>
@@ -58,7 +60,7 @@
       <!-- Floating Action Button only visible for Android. -->
       <ons-if platform="android">
         <ons-fab position="right bottom" component="button/new-task">
-          <ons-icon icon="md-edit"></ons-icon>
+          <ons-icon icon="fa-plus"></ons-icon>
         </ons-fab>
       </ons-if>
 
