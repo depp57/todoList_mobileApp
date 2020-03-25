@@ -163,20 +163,3 @@ ons-splitter-side[side="left"][animation="overlay"] {
     height: 0;
   }
 }
-
-
-
-/* success */
-.toast--success {
-  left: 0;
-  margin-left: auto;
-  right: 0;
-  margin-right: auto;
-  width: 50%;
-  border-radius: 30px;
-  background-color: hsl(141, 71%, 48%);
-}
-.toast--success__message {
-  margin: 0;
-  text-align: center;
-}
