@@ -15,7 +15,7 @@ myApp.services = {
     create: function(data) {
       // Task item template.
       var taskItem = ons.createElement(
-        '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
+        '<ons-list-item tappable component="task"' + myApp.services.categories.parseId(data.category)+ '">' +
           '<label class="left">' +
            '<ons-checkbox></ons-checkbox>' +
           '</label>' +
@@ -103,6 +103,7 @@ myApp.services = {
 
     // Deletes a task item and its listeners.
     remove: function(taskItem) {
+      console.log(taskItem);
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
 
       myApp.services.animators.remove(taskItem, function() {
@@ -113,6 +114,13 @@ myApp.services = {
       });
 
       remove(taskItem);
+    },
+
+    removeAll: function(){
+      let tasks = document.querySelectorAll('[component="task"]');
+      tasks.forEach( function(task) {
+        myApp.services.tasks.remove(task)
+      })
     }
 
 

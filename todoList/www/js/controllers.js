@@ -16,7 +16,7 @@ myApp.controllers = {
 
     // Nuke all tasks
     page.querySelector('[component="button/remove-all-tasks"').onclick = function() {
-      document.querySelector('#mySplitter').left.toggle();
+      myApp.services.tasks.removeAll();
     };
 
     // Set button functionality to push 'new_task.html' page.
