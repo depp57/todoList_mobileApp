@@ -28,7 +28,6 @@ myApp.services = {
         '</ons-list-item>'
       );
 
-      // AJOUT DANS LE LOCAL STORAGE
       add(data);
 
       // Store data within the element.
@@ -37,7 +36,15 @@ myApp.services = {
       // Add 'completion' functionality when the checkbox changes.
       taskItem.data.onCheckboxChange = function(event) {
         myApp.services.animators.swipe(taskItem, function() {
-          var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#completed-list' : '#pending-list';
+          var listId = '#pending-list';
+          if (taskItem.parentElement.id === 'pending-list' && event.target.checked) {
+            listId = '#progress-list';
+          }
+          else if (taskItem.parentElement.id === 'progress-list' && event.target.checked){
+            listId = "#completed-list";
+          }
+
+          //var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#completed-list' : '#pending-list';
           document.querySelector(listId).appendChild(taskItem);
         });
       };

@@ -16,7 +16,17 @@ myApp.controllers = {
 
     // Nuke all tasks
     page.querySelector('[component="button/remove-all-tasks"').onclick = function() {
-      myApp.services.tasks.removeAll();
+      ons.notification.confirm(
+          {
+            title: 'Supprimer tout ?',
+            message: 'Toutes les données seront supprimées.',
+            buttonLabels: ['Annuler', 'Valider']
+          }
+      ).then(function (index) {
+        if (index === 1){
+          myApp.services.tasks.removeAll();
+        }
+      })
     };
 
     // Set button functionality to push 'new_task.html' page.
@@ -101,9 +111,9 @@ myApp.controllers = {
         // If input title is not empty, ask for confirmation before saving.
         ons.notification.confirm(
           {
-            title: 'Save changes?',
-            message: 'Previous data will be overwritten.',
-            buttonLabels: ['Discard', 'Save']
+            title: 'Sauvegarder',
+            message: 'Les anciennes données seront supprimées.',
+            buttonLabels: ['Annuler', 'Sauvegarder']
           }
         ).then(function(buttonIndex) {
           if (buttonIndex === 1) {
