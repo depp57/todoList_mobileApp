@@ -1,3 +1,5 @@
+
+
 /***********************************************************************************
  * App Services. This contains the logic of the application organised in modules/objects. *
  ***********************************************************************************/
@@ -25,6 +27,9 @@ myApp.services = {
           '</div>' +
         '</ons-list-item>'
       );
+
+      // AJOUT DANS LE LOCAL STORAGE
+      add(data);
 
       // Store data within the element.
       taskItem.data = data;
@@ -92,6 +97,8 @@ myApp.services = {
 
       // Store the new data within the element.
       taskItem.data = data;
+
+      add(data);
     },
 
     // Deletes a task item and its listeners.
@@ -104,6 +111,8 @@ myApp.services = {
         // Check if the category has no items and remove it in that case.
         myApp.services.categories.updateRemove(taskItem.data.category);
       });
+
+      remove(taskItem);
     }
   },
 

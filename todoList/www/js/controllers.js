@@ -48,16 +48,15 @@ myApp.controllers = {
         var newTitle = page.querySelector('#title-input').value;
 
         if (newTitle) {
+          var newTask = {
+            title: newTitle,
+            category: page.querySelector('#category-input').value,
+            description: page.querySelector('#description-input').value,
+            highlight: page.querySelector('#highlight-input').checked,
+            urgent: page.querySelector('#urgent-input').checked
+          };
           // If input title is not empty, create a new task.
-          myApp.services.tasks.create(
-            {
-              title: newTitle,
-              category: page.querySelector('#category-input').value,
-              description: page.querySelector('#description-input').value,
-              highlight: page.querySelector('#highlight-input').checked,
-              urgent: page.querySelector('#urgent-input').checked
-            }
-          );
+          myApp.services.tasks.create(newTask);
 
           // Set selected category to 'All', refresh and pop page.
           document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
@@ -68,6 +67,8 @@ myApp.controllers = {
           // Show alert if the input title is empty.
           ons.notification.alert('You must provide a task title.');
         }
+
+        add(newTask);
       };
     });
   },

@@ -1,4 +1,5 @@
 // App logic.
+
 window.myApp = {};
 
 document.addEventListener('init', function(event) {
@@ -16,9 +17,12 @@ document.addEventListener('init', function(event) {
       && document.querySelector('#pendingTasksPage')
       && !document.querySelector('#pendingTasksPage ons-list-item')
     ) {
-      myApp.services.fixtures.forEach(function(data) {
-        myApp.services.tasks.create(data);
-      });
+      //myApp.services.fixtures.forEach(function(data) {
+      //myApp.services.tasks.create(data);
+      //});
+
+      // AJOUTE TOUTES LES TACHES DU LOCALSTORAGE
+      getAllTasks().forEach(data => myApp.services.tasks.create(data));
     }
   }
 });
