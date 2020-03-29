@@ -20,20 +20,18 @@
     </ons-list-item>
     <ons-list-item modifier="nodivider">
       <div class="center">
-        <ons-input id="category-input" type="text" placeholder="Catégorie" float></ons-input>
+        <ons-input id="description-input" type="text" placeholder="Description" float></ons-input>
       </div>
     </ons-list-item>
     <ons-list-item modifier="nodivider">
       <div class="center">
-        <ons-input id="description-input" type="text" placeholder="Description" float></ons-input>
+        <ons-input id="category-input" type="text" placeholder="Nouvelle catégorie" float></ons-input>
       </div>
     </ons-list-item>
 
     <ons-list-item modifier="nodivider">
-      <ons-select id="choose-sel" onchange="editSelects(event)">
-        <option value="basic">Basic</option>
-        <option value="material">Material</option>
-        <option value="underbar">Underbar</option>
+      <ons-list-header>Catégories existantes : </ons-list-header>
+      <ons-select id="categories-list">
       </ons-select>
     </ons-list-item>
   </ons-list>

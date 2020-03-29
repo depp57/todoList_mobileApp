@@ -18,7 +18,7 @@ myApp.controllers = {
     page.querySelector('[component="button/remove-all-tasks"').onclick = function() {
       ons.notification.confirm(
           {
-            title: 'Supprimer tout ?',
+            title: 'Tout supprimer ?',
             message: 'Toutes les données seront supprimées.',
             buttonLabels: ['Annuler', 'Valider']
           }
@@ -29,10 +29,11 @@ myApp.controllers = {
       })
     };
 
+
     // Set button functionality to push 'new_task.html' page.
     Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-task"]'), function(element) {
       element.onclick = function() {
-        document.querySelector('#myNavigator').pushPage('html/new_task.html');
+        document.querySelector('#myNavigator').pushPage("html/new_task.html");
       };
 
       element.show && element.show(); // Fix ons-fab in Safari.
@@ -59,14 +60,18 @@ myApp.controllers = {
   ////////////////////////////
   newTaskPage: function(page) {
     // Set button functionality to save a new task.
-    Array.prototype.forEach.call(page.querySelectorAll('[component="button/save-task"]'), function(element) {
-      element.onclick = function() {
+    Array.prototype.forEach.call(page.querySelectorAll('[component="button/save-task"]'), function (element) {
+      element.onclick = function () {
         var newTitle = page.querySelector('#title-input').value;
 
         if (newTitle) {
+          let inputNewCateg = page.querySelector('#category-input').value;
+          let categorie = inputNewCateg !== '' ? inputNewCateg : $('#categories-list').text();
+
+
           var newTask = {
             title: newTitle,
-            category: page.querySelector('#category-input').value,
+            category: categorie,
             description: page.querySelector('#description-input').value,
             highlight: page.querySelector('#highlight-input').checked,
             urgent: page.querySelector('#urgent-input').checked,
@@ -84,11 +89,14 @@ myApp.controllers = {
           // Show alert if the input title is empty.
           ons.notification.alert('Le titre ne peut pas être vide.');
         }
-
         addInStorage(newTask);
       };
     });
+
+    //Ajoute les catégories à la liste des catégories dans la page de création de tâches
+    this.addCategoriesInList();
   },
+
 
   ////////////////////////////////
   // Details Task Page Controller //
@@ -118,11 +126,14 @@ myApp.controllers = {
           }
         ).then(function(buttonIndex) {
           if (buttonIndex === 1) {
+            let inputNewCateg = page.querySelector('#category-input').value;
+            let categorie = inputNewCateg !== '' ? inputNewCateg : $('#categories-list').text();
+
             // If 'Save' button was pressed, overwrite the task.
             myApp.services.tasks.update(element,
               {
                 title: newTitle,
-                category: page.querySelector('#category-input').value,
+                category: categorie,
                 description: page.querySelector('#description-input').value,
                 urgent: element.data.urgent,
                 highlight: page.querySelector('#highlight-input').checked,
@@ -142,5 +153,23 @@ myApp.controllers = {
         ons.notification.alert('Le titre ne peut pas être vide.');
       }
     };
+
+    //Ajoute les catégories à la liste des catégories dans la page de création de tâches
+    this.addCategoriesInList();
+  },
+
+  addCategoriesInList: function () {
+    let categ = myApp.services.categories.categoriesExistantes;
+    categ.forEach(categorieCourante => {
+      let list = $('#categories-list').find('select');
+
+      let option = $(`<option value=${categorieCourante}>`);
+      option.text(categorieCourante);
+
+      //Ajout du listener
+      option.click((e) => console.log(e)); //TODO
+
+      list.append(option);
+    });
   }
 };

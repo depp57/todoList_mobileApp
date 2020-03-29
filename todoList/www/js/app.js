@@ -28,9 +28,10 @@ document.addEventListener('init', function(event) {
           && document.querySelector('#completed-list')
           && !created
       ) {
-        //myApp.services.fixtures.forEach(function(data) {
-        //myApp.services.tasks.create(data);
-        //});
+
+        if (isNewSession()) {
+          myApp.services.defaultData.forEach(data => addInStorage(data));
+        }
 
         // AJOUTE TOUTES LES TACHES DU LOCALSTORAGE
         created = true;

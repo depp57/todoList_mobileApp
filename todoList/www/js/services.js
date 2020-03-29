@@ -14,7 +14,7 @@ myApp.services = {
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
       // Task item template.
-      var taskItem = ons.createElement(
+      let taskItem = ons.createElement(
         '<ons-list-item tappable status="" component="task" category="' + myApp.services.categories.parseId(data.category)+ '">' +
           '<label class="left">' +
            '<ons-checkbox></ons-checkbox>' +
@@ -60,9 +60,8 @@ myApp.services = {
             urgent: data.urgent,
             highlight: data.highlight,
             status: newStatus
-          }
+          };
           update(newData);
-
 
         });
       };
@@ -96,8 +95,10 @@ myApp.services = {
       }
 
       // Insert urgent tasks at the top and non urgent tasks at the bottom
-      var pendingList = document.querySelector('#'+ data.status +'-list');
-      pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
+      let pendingList = document.querySelector('#'+ data.status +'-list');
+      if (pendingList != null) {
+        pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
+      }
     },
 
     // Modifies the inner data and current view of an existing task.
@@ -155,9 +156,14 @@ myApp.services = {
   // Category Service //
   ////////////////////
   categories: {
+    //Liste des catégories existantes
+    categoriesExistantes: [],
+
 
     // Creates a new category and attaches it to the custom category list.
     create: function(categoryLabel) {
+      this.categoriesExistantes.push(categoryLabel);
+
       var categoryId = myApp.services.categories.parseId(categoryLabel);
 
       // Category item template.
@@ -271,62 +277,22 @@ myApp.services = {
   ////////////////////////
   // Initial Data Service //
   ////////////////////////
-  fixtures: [
+  defaultData: [
     {
-      title: 'Download OnsenUI',
+      title: 'Bienvenue !',
       category: 'Programming',
-      description: 'Some description.',
+      description: 'Un peu de description...',
       highlight: false,
-      urgent: false
+      urgent: true,
+      status: "pending"
     },
     {
-      title: 'Install Monaca CLI',
+      title: 'Rendu intermédiaire',
       category: 'Programming',
-      description: 'Some description.',
+      description: 'Un peu de description...',
       highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Star Onsen UI repo on Github',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Register in the community forum',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Send donations to Fran and Andreas',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Profit',
-      category: '',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Visit Japan',
-      category: 'Travels',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      title: 'Enjoy an Onsen with Onsen UI team',
-      category: 'Personal',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
+      urgent: false,
+      status: "pending"
     }
   ]
 };

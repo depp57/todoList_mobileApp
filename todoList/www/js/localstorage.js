@@ -15,7 +15,6 @@ function update(task) {
 
 function getAllTasks() {
     let tasks = [];
-    console.log(storage)
     forEachKey(task => tasks.push(JSON.parse(task)));
     return tasks;
 }
@@ -23,4 +22,12 @@ function getAllTasks() {
 function forEachKey(callback) {
     for (let i = 0; i < storage.length; i++)
         callback(storage.getItem(storage.key(i)));
+}
+
+function isNewSession() {
+    if (storage.getItem('newSession') === null) {
+        storage.setItem('newSession', 'false');
+        return true;
+    }
+    return false;
 }
