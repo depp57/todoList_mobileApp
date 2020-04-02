@@ -6,6 +6,9 @@ function addInStorage(object) {
 
 function removeInStorage(object) {
     let title = object.innerText;
+    //Supprime le sablier de la deadline du titre
+    title = title.split('⌛')[0];
+
     storage.removeItem(title);
 }
 

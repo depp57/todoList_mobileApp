@@ -22,10 +22,21 @@ myApp.controllers = {
             message: 'Toutes les données seront supprimées.',
             buttonLabels: ['Annuler', 'Valider']
           }
-      ).then(function (index) {
-        if (index === 1){
-          myApp.services.tasks.removeAll();
-        }
+      ).then((index) => {
+        if (index === 1) myApp.services.tasks.removeAll();
+      })
+    };
+
+    // Nuke all outdated tasks
+    page.querySelector('[component="button/remove-all-outdated-tasks"').onclick = function() {
+      ons.notification.confirm(
+          {
+            title: 'Supprimer toutes les tâches passées ?',
+            message: 'Toutes les tâches passées seront supprimées.',
+            buttonLabels: ['Annuler', 'Valider']
+          }
+      ).then((index) => {
+        if (index === 1) myApp.services.tasks.removeAllPastTasks();
       })
     };
 
@@ -75,7 +86,8 @@ myApp.controllers = {
             description: page.querySelector('#description-input').value,
             highlight: page.querySelector('#highlight-input').checked,
             urgent: page.querySelector('#urgent-input').checked,
-            status: 'pending'
+            status: 'pending',
+            deadline: page.querySelector('#deadline-input').value
           };
           // If input title is not empty, create a new task.
           myApp.services.tasks.create(newTask);
@@ -95,6 +107,9 @@ myApp.controllers = {
 
     //Ajoute les catégories à la liste des catégories dans la page de création de tâches
     this.addCategoriesInList();
+
+    //Retire le placeholder de l'input date (jj/mm/aaaa)
+    this.removeInputDatePlaceholder();
   },
 
 
@@ -111,6 +126,7 @@ myApp.controllers = {
     page.querySelector('#description-input').value = element.data.description;
     page.querySelector('#highlight-input').checked = element.data.highlight;
     page.querySelector('#urgent-input').checked = element.data.urgent;
+    page.querySelector('#deadline-input').value = element.data.deadline;
 
     // Set button functionality to save an existing task.
     page.querySelector('[component="button/save-task"]').onclick = function() {
@@ -137,7 +153,8 @@ myApp.controllers = {
                 description: page.querySelector('#description-input').value,
                 urgent: element.data.urgent,
                 highlight: page.querySelector('#highlight-input').checked,
-                status: page.data.element.data.status
+                status: page.data.element.data.status,
+                deadline: page.querySelector('#deadline-input').value
               }
             );
 
@@ -156,6 +173,15 @@ myApp.controllers = {
 
     //Ajoute les catégories à la liste des catégories dans la page de création de tâches
     this.addCategoriesInList();
+
+    //Retire le placeholder de l'input date (jj/mm/aaaa)
+    this.removeInputDatePlaceholder();
+  },
+
+  removeInputDatePlaceholder: function () {
+    let deadlineInput = $('#deadline-input').find('input');
+    deadlineInput.focus(() => deadlineInput.prop('type', 'date'));
+    deadlineInput.focusout(() => deadlineInput.prop('type', 'text'));
   },
 
   addCategoriesInList: function () {

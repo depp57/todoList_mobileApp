@@ -13,14 +13,19 @@ myApp.services = {
 
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
+
+      //Affiche une petite alerte si la deadline est passée
+      let isOutdated = (Date.parse(data.deadline) < new Date().getTime()) ? '&#8987' : '';
+
+
       // Task item template.
       let taskItem = ons.createElement(
-        '<ons-list-item tappable status="" component="task" category="' + myApp.services.categories.parseId(data.category)+ '">' +
+        `<ons-list-item tappable ${isOutdated !== '' ? 'status=outdated' : ''} component="task" category="' + myApp.services.categories.parseId(data.category)+ '">` +
           '<label class="left">' +
            '<ons-checkbox></ons-checkbox>' +
           '</label>' +
           '<div class="center">' +
-            data.title +
+            data.title + isOutdated +
           '</div>' +
           '<div class="right">' +
             '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
@@ -129,7 +134,6 @@ myApp.services = {
 
     // Deletes a task item and its listeners.
     remove: function(taskItem) {
-      console.log(taskItem);
       taskItem.removeEventListener('change', taskItem.data.onCheckboxChange);
 
       myApp.services.animators.remove(taskItem, function() {
@@ -144,12 +148,16 @@ myApp.services = {
 
     removeAll: function(){
       let tasks = document.querySelectorAll('[component="task"]');
-      tasks.forEach( function(task) {
-        myApp.services.tasks.remove(task)
+      tasks.forEach((task) => myApp.services.tasks.remove(task))
+    },
+
+    removeAllPastTasks: function () {
+      let tasks = document.querySelectorAll('[component="task"]');
+      tasks.forEach( (task) =>  {
+        if ($(task).attr('status') === 'outdated')
+          myApp.services.tasks.remove(task);
       })
     }
-
-
   },
 
   /////////////////////
@@ -284,7 +292,8 @@ myApp.services = {
       description: 'Un peu de description...',
       highlight: false,
       urgent: true,
-      status: "pending"
+      status: "pending",
+      deadline: '2020-04-30'
     },
     {
       title: 'Rendu intermédiaire',
@@ -292,7 +301,8 @@ myApp.services = {
       description: 'Un peu de description...',
       highlight: false,
       urgent: false,
-      status: "pending"
+      status: "pending",
+      deadline: '2020-04-01'
     }
   ]
 };
