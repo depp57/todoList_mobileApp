@@ -161,15 +161,20 @@ myApp.controllers = {
   addCategoriesInList: function () {
     let categ = myApp.services.categories.categoriesExistantes;
     categ.forEach(categorieCourante => {
-      let list = $('#categories-list').find('select');
+      let list = $('#categories-list');
 
       let option = $(`<option value=${categorieCourante}>`);
       option.text(categorieCourante);
 
-      //Ajout du listener
-      option.click((e) => console.log(e)); //TODO
 
-      list.append(option);
+      //Ajout du listener
+      list.click(e => {
+        let options = list.prop("options");
+        let selectedOption = options[list.prop("selectedIndex")].value;
+        $('#category-input').prop("value", selectedOption);
+      });
+
+      list.find('select').append(option);
     });
   }
 };
