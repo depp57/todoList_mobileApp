@@ -13,7 +13,6 @@ myApp.services = {
 
     // Creates a new task and attaches it to the pending task list.
     create: function(data) {
-
       //Affiche une petite alerte si la deadline est passée
       let isOutdated = (Date.parse(data.deadline) < new Date().getTime()) ? '&#8987' : '';
 
@@ -64,7 +63,9 @@ myApp.services = {
             description: data.description,
             urgent: data.urgent,
             highlight: data.highlight,
-            status: newStatus
+            status: newStatus,
+            deadline: data.deadline,
+            sortIndex: data.sortIndex
           };
           update(newData);
 
@@ -99,11 +100,13 @@ myApp.services = {
         taskItem.classList.add('highlight');
       }
 
-      // Insert urgent tasks at the top and non urgent tasks at the bottom
+      // Ajoute la tâche à la liste, le tri se faisant dans localstorage.js
       let pendingList = document.querySelector('#'+ data.status +'-list');
+      pendingList.appendChild(taskItem);
+      /*
       if (pendingList != null) {
         pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
-      }
+      }*/
     },
 
     // Modifies the inner data and current view of an existing task.
@@ -157,7 +160,64 @@ myApp.services = {
         if ($(task).attr('status') === 'outdated')
           myApp.services.tasks.remove(task);
       })
+    },
+
+    sort: function (order) {
+      let changeTaskSortIndex = (res, a, b) => {
+        if (res === 1 && a.sortIndex < b.sortIndex
+            || res === -1 && a.sortIndex > b.sortIndex) {
+          let temp = a.sortIndex;
+          a.sortIndex = b.sortIndex;
+          b.sortIndex = temp;
+        }
+      };
+
+      let tasks = getAllTasks();
+      let comparator;
+
+      switch (order) {
+        case 'alphabetic_ascending' : {
+          comparator = (a, b) => {
+            let res = a.title.localeCompare(b.title);
+            changeTaskSortIndex(res, a, b);
+            return res;
+          };
+          break;
+        }
+
+        case 'alphabetic_descending' : {
+          comparator = (a, b) => {
+            let res = - a.title.localeCompare(b.title);
+            changeTaskSortIndex(res, a, b);
+            return res;
+          };
+         break;
+        }
+
+        case 'deadline_ascending' : {
+          comparator = (a, b) => {
+            let res = Date.parse(a.deadline) < Date.parse(b.deadline) ? 1 : -1;
+            changeTaskSortIndex(res, a, b);
+            return res;
+          };
+          break;
+        }
+
+        case 'deadline_descending' : {
+          comparator = (a, b) => {
+            let res = Date.parse(a.deadline) < Date.parse(b.deadline) ? -1 : 1;
+            changeTaskSortIndex(res, a, b);
+            return res;
+          };
+          break;
+        }
+      }
+
+      tasks.sort(comparator);
+      this.removeAll(); //Supprime toutes les tâches non triées
+      tasks.forEach((task) => this.create(task)); //Update la vue et le localStorage (car les index de tri des tâches ont changés)
     }
+
   },
 
   /////////////////////
@@ -293,7 +353,8 @@ myApp.services = {
       highlight: false,
       urgent: true,
       status: "pending",
-      deadline: '2020-04-30'
+      deadline: '2020-04-30',
+      sortIndex: 2
     },
     {
       title: 'Rendu intermédiaire',
@@ -302,7 +363,9 @@ myApp.services = {
       highlight: false,
       urgent: false,
       status: "pending",
-      deadline: '2020-04-01'
+      deadline: '2020-04-01',
+      sortIndex: 1
     }
+
   ]
 };

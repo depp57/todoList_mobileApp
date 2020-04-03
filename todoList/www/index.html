@@ -6,7 +6,6 @@
 
   <script src="lib/onsen/js/onsenui.js"></script>
 
-
   <script src="js/localstorage.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
@@ -90,6 +89,26 @@
     </ons-page>
   </template>
 
+  <ons-template id="sortPopover.html">
+    <ons-popover cancelable direction="up" animation="fade-md">
+      <div style="text-align: center;">
+        <ons-list>
+          <ons-list-item id="sort_alphabetic_ascending">
+            <img class="list-item__thumbnail" src="img/sortAC.png">
+          </ons-list-item>
+          <ons-list-item id="sort_alphabetic_descending">
+            <img class="list-item__thumbnail" src="img/sortAD.png">
+          </ons-list-item>
+          <ons-list-item id="sort_deadline_ascending">
+            <img class="list-item__thumbnail" src="img/sortNC.png">
+          </ons-list-item>
+          <ons-list-item id="sort_deadline_descending">
+            <img class="list-item__thumbnail" src="img/sortND.png">
+          </ons-list-item>
+        </ons-list>
+      </div>
+    </ons-popover>
+  </ons-template>
 </body>
 
 </html>

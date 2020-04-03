@@ -18,7 +18,22 @@ function update(task) {
 
 function getAllTasks() {
     let tasks = [];
-    forEachKey(task => tasks.push(JSON.parse(task)));
+    forEachKey(task => {
+        //N'ajoute que les tâches, et non les autres objets pouvant être stockés dans le localstorage
+        let jsonTask = JSON.parse(task);
+        if (jsonTask.title) tasks.push(jsonTask);
+    });
+
+    //Tri les tâches
+    tasks.sort((a, b) => {
+
+        //Tri par urgence, je sais normalement faudrait check si les 2 sont urgents etc..
+        if (a.urgent) return -1;
+        if (b.urgent) return 1;
+
+        return a.sortIndex < b.sortIndex ? -1 : 1;
+    });
+
     return tasks;
 }
 
@@ -35,8 +50,7 @@ function isNewSession() {
     return false;
 }
 
-document.addEventListener('deviceready', function() {
-    window.sqlitePlugin.echoTest(function() {
-        alert("Good");
-    });
-});
+function getNewSortIndex() {
+    let tasks = getAllTasks();
+    return Math.max.apply(Math, tasks.map((task) => task.sortIndex)) + 1;
+}

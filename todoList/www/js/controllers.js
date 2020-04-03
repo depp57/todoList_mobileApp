@@ -54,8 +54,16 @@ myApp.controllers = {
     page.querySelector('#myTabbar').setAttribute('animation', ons.platform.isAndroid() ? 'slide' : 'none');
 
     //Ajout listener bouton tri
-    $('[component="button/sort"]').click(() => {
-      
+    $('[component="button/sort"]').click((e) => {
+      ons.createElement('sortPopover.html', { append: true })
+          .then(function(popover) {
+            popover.show(e);
+
+            $('#sort_alphabetic_ascending').click(() => myApp.services.tasks.sort('alphabetic_ascending'));
+            $('#sort_alphabetic_descending').click(() => myApp.services.tasks.sort('alphabetic_descending'));
+            $('#sort_deadline_ascending').click(() => myApp.services.tasks.sort('deadline_ascending'));
+            $('#sort_deadline_descending').click(() => myApp.services.tasks.sort('deadline_descending'));
+          });
     });
   },
 
@@ -92,7 +100,8 @@ myApp.controllers = {
             highlight: page.querySelector('#highlight-input').checked,
             urgent: page.querySelector('#urgent-input').checked,
             status: 'pending',
-            deadline: page.querySelector('#deadline-input').value
+            deadline: page.querySelector('#deadline-input').value,
+            sortIndex: getNewSortIndex()
           };
           // If input title is not empty, create a new task.
           myApp.services.tasks.create(newTask);
@@ -147,14 +156,12 @@ myApp.controllers = {
           }
         ).then(function(buttonIndex) {
           if (buttonIndex === 1) {
-            let inputNewCateg = page.querySelector('#category-input').value;
-            let categorie = inputNewCateg !== '' ? inputNewCateg : $('#categories-list').text();
 
             // If 'Save' button was pressed, overwrite the task.
             myApp.services.tasks.update(element,
               {
                 title: newTitle,
-                category: categorie,
+                category: page.querySelector('#category-input').value,
                 description: page.querySelector('#description-input').value,
                 urgent: element.data.urgent,
                 highlight: page.querySelector('#highlight-input').checked,

@@ -26,6 +26,10 @@ ons-splitter-side[side="left"][animation="overlay"] {
   color: #666
 }
 
+.popover__content {
+  width: auto;
+}
+
 
 /********************
  *** Animation CSS ***
