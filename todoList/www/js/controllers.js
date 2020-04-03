@@ -58,11 +58,6 @@ myApp.controllers = {
       ons.createElement('sortPopover.html', { append: true })
           .then(function(popover) {
             popover.show(e);
-
-            $('#sort_alphabetic_ascending').click(() => myApp.services.tasks.sort('alphabetic_ascending'));
-            $('#sort_alphabetic_descending').click(() => myApp.services.tasks.sort('alphabetic_descending'));
-            $('#sort_deadline_ascending').click(() => myApp.services.tasks.sort('deadline_ascending'));
-            $('#sort_deadline_descending').click(() => myApp.services.tasks.sort('deadline_descending'));
           });
     });
   },

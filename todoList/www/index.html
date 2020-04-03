@@ -93,16 +93,16 @@
     <ons-popover cancelable direction="up" animation="fade-md">
       <div style="text-align: center;">
         <ons-list>
-          <ons-list-item id="sort_alphabetic_ascending">
+          <ons-list-item id="sort_alphabetic_ascending" onclick="myApp.services.tasks.sort('alphabetic_ascending')">
             <img class="list-item__thumbnail" src="img/sortAC.png">
           </ons-list-item>
-          <ons-list-item id="sort_alphabetic_descending">
+          <ons-list-item id="sort_alphabetic_descending" onclick="myApp.services.tasks.sort('alphabetic_descending')">
             <img class="list-item__thumbnail" src="img/sortAD.png">
           </ons-list-item>
-          <ons-list-item id="sort_deadline_ascending">
+          <ons-list-item id="sort_deadline_ascending" onclick="myApp.services.tasks.sort('deadline_ascending')">
             <img class="list-item__thumbnail" src="img/sortNC.png">
           </ons-list-item>
-          <ons-list-item id="sort_deadline_descending">
+          <ons-list-item id="sort_deadline_descending" onclick="myApp.services.tasks.sort('deadline_descending')">
             <img class="list-item__thumbnail" src="img/sortND.png">
           </ons-list-item>
         </ons-list>
