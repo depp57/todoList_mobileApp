@@ -212,7 +212,7 @@ myApp.services = {
           break;
         }
       }
-      console.log(order);
+
       tasks.sort(comparator);
       this.removeAll(); //Supprime toutes les tâches non triées
       tasks.forEach((task) => this.create(task)); //Update la vue et le localStorage (car les index de tri des tâches ont changés)

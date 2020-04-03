@@ -40,4 +40,9 @@ document.addEventListener('init', function(event) {
     }
   }
 
+  dragula([document.getElementById('completed-list'), document.getElementById('progress-list'), document.getElementById('pending-list')], {
+    revertOnSpill: false,
+    direction: 'vertical'
+  });
+
 });
