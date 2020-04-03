@@ -52,6 +52,11 @@ myApp.controllers = {
 
     // Change tabbar animation depending on platform.
     page.querySelector('#myTabbar').setAttribute('animation', ons.platform.isAndroid() ? 'slide' : 'none');
+
+    //Ajout listener bouton tri
+    $('[component="button/sort"]').click(() => {
+      
+    });
   },
 
   ////////////////////////

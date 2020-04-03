@@ -34,3 +34,9 @@ function isNewSession() {
     }
     return false;
 }
+
+document.addEventListener('deviceready', function() {
+    window.sqlitePlugin.echoTest(function() {
+        alert("Good");
+    });
+});

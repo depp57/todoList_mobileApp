@@ -67,6 +67,12 @@
 
       <!-- Floating Action Button only visible for Android. -->
       <ons-if platform="android">
+        <ons-fab position="left bottom" component="button/sort">
+          <ons-icon icon="fa-sort"></ons-icon>
+        </ons-fab>
+      </ons-if>
+
+      <ons-if platform="android">
         <ons-fab position="right bottom" component="button/new-task">
           <ons-icon icon="fa-plus"></ons-icon>
         </ons-fab>

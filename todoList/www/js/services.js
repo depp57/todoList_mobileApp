@@ -234,7 +234,7 @@ myApp.services = {
 
         var taskItems = document.querySelectorAll('#tabbarPage ons-list-item');
         for (var i = 0; i < taskItems.length; i++) {
-          taskItems[i].style.display = (allItems || taskItems[i].getAttribute('category') === categoryId) ? '' : 'none';
+          taskItems[i].style.display = (allItems || taskItems[i].data.category.toLowerCase() === categoryId.toLowerCase()) ? '' : 'none';
         }
       };
 
